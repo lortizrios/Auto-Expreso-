@@ -3,10 +3,12 @@
     <color name="colorPrimary">#81C784</color>
     <color name="colorPrimaryDark">#4caf50</color>
     <color name="colorAccent">#66BB6A</color>
-    <color name="halfGreen">#9e81c784</color>
+    <color name="halfGreen">#8880C683</color>
     <color name="white">#ffffff</color>
     <color name="semi_transparent_black">#b9000000</color>
     <color name="black">#000000</color>
     <color name="trasparent">#00000000</color>
-    <color name="halfBlack">#1B000000</color>
+    <color name="halfBlack">#80000000</color>
+    <color name="softBlack">#1B000000</color>
+    <color name="semiTrasparent">#0D000000</color>
 </resources>

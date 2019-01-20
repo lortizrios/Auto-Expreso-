@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.r0adkll.slidr.Slidr;
@@ -20,6 +21,9 @@ public class SlideMenuActivity extends AppCompatActivity {
     //Slide menu
     private LinearLayout infoClick;
     private LinearLayout sobreProg;
+    private LinearLayout donar;
+    private LinearLayout contactProg;
+    private LinearLayout bug;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,13 @@ public class SlideMenuActivity extends AppCompatActivity {
 
         infoClick = (LinearLayout) findViewById(R.id.infoClick);
         sobreProg = (LinearLayout) findViewById(R.id.sobreProg);
+        donar = (LinearLayout) findViewById(R.id.donar);
+        contactProg = (LinearLayout) findViewById(R.id.contactProg);
+        bug = (LinearLayout) findViewById(R.id.bug);
 
-
+        //Imprime version de la aplicación
+        TextView versionName = findViewById(R.id.version);
+        versionName.setText(BuildConfig.VERSION_NAME);
 
 
         //Cierra el Activity onClick
@@ -50,8 +59,8 @@ public class SlideMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                infoClick.setBackgroundColor(Color.parseColor("#1B000000"));
-                Toast.makeText(SlideMenuActivity.this, "Oprimiste el menu", Toast.LENGTH_SHORT).show();
+                infoClick.setBackgroundColor(Color.parseColor("#0D000000"));
+                Toast.makeText(SlideMenuActivity.this, "Informacion de la app", Toast.LENGTH_SHORT).show();
                 finish();
 
             }
@@ -62,8 +71,44 @@ public class SlideMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                sobreProg.setBackgroundColor(Color.parseColor("#1B000000"));
-                Toast.makeText(SlideMenuActivity.this, "Oprimiste el menu", Toast.LENGTH_SHORT).show();
+                sobreProg.setBackgroundColor(Color.parseColor("#0D000000"));
+                Toast.makeText(SlideMenuActivity.this, "Sobre el programador", Toast.LENGTH_SHORT).show();
+                finish();
+
+            }
+        });
+
+        //Layout Sobre donar
+        donar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                donar.setBackgroundColor(Color.parseColor("#0D000000"));
+                Toast.makeText(SlideMenuActivity.this, "Donar", Toast.LENGTH_SHORT).show();
+                finish();
+
+            }
+        });
+
+        //Layout Sobre contactar desarrollador
+        contactProg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                contactProg.setBackgroundColor(Color.parseColor("#0D000000"));
+                Toast.makeText(SlideMenuActivity.this, "Contactar Desarrollador", Toast.LENGTH_SHORT).show();
+                finish();
+
+            }
+        });
+
+        //Layout Sobre reportar bug
+        bug.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                bug.setBackgroundColor(Color.parseColor("#0D000000"));
+                Toast.makeText(SlideMenuActivity.this, "Reportar bug", Toast.LENGTH_SHORT).show();
                 finish();
 
             }

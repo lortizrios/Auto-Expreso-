@@ -27,6 +27,12 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="slidemenu">Menu</string>
+    <string name="programador">Acerca del programador</string>
+    <string name="contactProg">Contactar al desarrollador</string>
+    <string name="comunicacion">Comunicación</string>
+    <string name="bugs">Bugs</string>
+    <string name="reportarbugs">Reportar fallos</string>
+    <string name="version"> Versión: </string>
 
 
 </resources>
