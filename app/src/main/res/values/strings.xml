@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name" translatable="false">Auto Expreso</string>
+    <string name="action_settings">Settings</string>
+    <string name="valorar">Valorar</string>
+    <string name="compartir">Compartir</string>
+    <string name="donar">Donar</string>
+    <string name="comentarios">Enviar comentarios</string>
+    <string name="info">Acerca de esta aplicación</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="sinconecion">No esta conectado al internet</string>
+    <string name="reintentar">Reintentar</string>
+    <string name="valorar_title">Valorar aplicación</string>
+    <string name="valorar_set_message">Si te ha gustado la aplicación, ¿Te importaría valorar la aplicación?
+        No te llevará más de un minuto. ¡Gracias por tu apoyo!</string>
+    <string name="no_gracias">¡NO, GRACIAS!</string>
+    <string name="valorar_ahora">VALORAR AHORA</string>
+    <string name="reload">Reload</string>
+    <string name="zoom">Zoom</string>
+    <string name="desarrollador">Sobre desarrollador</string>
+    <string name="email">Contactar al desarrollador</string>
+    <string name="reports_bugs">Reportar errores</string>
+    <string name="prueba">Prueba</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="title_activity_main_drawer">MainDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="slidemenu">Menu</string>
+
+
+</resources>

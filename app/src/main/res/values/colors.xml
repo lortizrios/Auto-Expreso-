@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#81C784</color>
+    <color name="colorPrimaryDark">#4caf50</color>
+    <color name="colorAccent">#66BB6A</color>
+    <color name="halfGreen">#9e81c784</color>
+    <color name="white">#ffffff</color>
+    <color name="semi_transparent_black">#b9000000</color>
+    <color name="black">#000000</color>
+    <color name="trasparent">#00000000</color>
+    <color name="halfBlack">#1B000000</color>
+</resources>

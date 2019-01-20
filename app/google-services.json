@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "191702599870",
+    "firebase_url": "https://autoexpreso-9a63a.firebaseio.com",
+    "project_id": "autoexpreso-9a63a",
+    "storage_bucket": "autoexpreso-9a63a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191702599870:android:e842006308dc5ea2",
+        "android_client_info": {
+          "package_name": "com.developing.leroy.autoexpresotoolbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191702599870-m24r1q43jdt98a75kvse0j8q93tlo2mv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developing.leroy.autoexpresotoolbox",
+            "certificate_hash": "d47bf37747ee403f9dd868df30bd34caadd588df"
+          }
+        },
+        {
+          "client_id": "191702599870-riuoqijtpmlgumfkh3vpls63ukr92919.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVhvPGELAuBq1N6mSzh7dpQ3GbL8ayC5Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191702599870-riuoqijtpmlgumfkh3vpls63ukr92919.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191702599870:android:7efac3aec2e1701d",
+        "android_client_info": {
+          "package_name": "com.example.leroy.autoexpreso2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191702599870-gli1s2tld1j03lt5nl24qmo3s1rgh39n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.leroy.autoexpreso2",
+            "certificate_hash": "d47bf37747ee403f9dd868df30bd34caadd588df"
+          }
+        },
+        {
+          "client_id": "191702599870-riuoqijtpmlgumfkh3vpls63ukr92919.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVhvPGELAuBq1N6mSzh7dpQ3GbL8ayC5Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191702599870-riuoqijtpmlgumfkh3vpls63ukr92919.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
