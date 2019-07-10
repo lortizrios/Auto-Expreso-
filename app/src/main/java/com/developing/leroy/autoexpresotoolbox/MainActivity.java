@@ -29,6 +29,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -101,54 +103,46 @@ public class MainActivity extends AppCompatActivity {
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-        if (!haveNetworkConnection()) {
-
+        //Si no tiene coneccion redirige al SlideMenuActivity
+        if(!haveNetworkConnection()){
             Intent intent = new Intent(this, NoConnectionActivity.class);
             startActivity(intent);
-        }
-
-            else {
-
-
+        }else{
             pullSwipeReload();
             websiteView();
-            }
+        }
 
-            fabActionButtons();
-
-
-
+        fabActionButtons();
     }
 
     //Habilita el Swipe Reload Web View
     public void pullSwipeReload() {
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
 
+                //Show Reload logo
+                swipeRefreshLayout.setRefreshing(true);
 
-                    //Show Reload logo
-                    swipeRefreshLayout.setRefreshing(true);
+                //Toast
+                onToast("Recargando Auto Expreso");
 
-                    //Toast
-                    onToast("Recargando Auto Expreso");
+                //Add a timer
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
 
-                    //Add a timer
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
+                        //Web view reloading
+                        webView.reload();
 
-                            //Web view reloading
-                            webView.reload();
+                        // Hide reload logo
+                        swipeRefreshLayout.setRefreshing(false);
 
-                            // Hide reload logo
-                            swipeRefreshLayout.setRefreshing(false);
+                    }//1.5 segundos de espera
+                }, 500);
+            }
 
-                        }//1.5 segundos de espera
-                    }, 500);
-                }
-
-            });
+        });
     }
 
     //Toast method
@@ -190,15 +184,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Define color del progressbar
-        ((ProgressBar)findViewById(R.id.materialProgressBar_ID))
-                .getIndeterminateDrawable()
-                .setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        ((ProgressBar)findViewById(R.id.materialProgressBar_ID)).getIndeterminateDrawable()
+        .setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
     }
 
     //Funcion que valida si el dispositivo tiene internet al iniciar
     private boolean haveNetworkConnection(){
         ConnectivityManager connectivityManager = (ConnectivityManager)
-                this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         boolean  isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
 
@@ -218,38 +211,34 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
+            //Calificar app
             case R.id.rate:
                 diaLog = rateDialog().show();
+            break;
 
-                break;
-
-            //Cierra la applicacion
+            //Compartir applicacion
             case R.id.share:
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_TEXT, "My new app http://www.----.com");
-                    startActivity(Intent.createChooser(intent, "Compartir"));
-
-                break;
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "My new app http://www.----.com");
+                startActivity(Intent.createChooser(intent, "Compartir"));
+            break;
 
             //Slide menu
             case R.id.slidemenu:
-
                 Intent menuIntent = new Intent(MainActivity.this, SlideMenuActivity.class);
                 startActivity(menuIntent);
-
-                break;
+                this.overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+            break;
 
             //Habilita back button para webview
             case android.R.id.home:
-                    if (webView.canGoBack()) {
-                        webView.goBack();
-
-                    } else {
-                        exitDialog().show();
-                    }
-
-                    break;
+                if (webView.canGoBack()){
+                    webView.goBack();
+                }else{
+                    exitDialog().show();
+                }
+            break;
         }
 
         return true;
@@ -313,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
 
         return builder;
 
-
     }
 
     @Override
@@ -343,25 +331,32 @@ public class MainActivity extends AppCompatActivity {
             super.onResume();
 
         }
+
+        Toast.makeText(this, "onResume()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPause() {
 
-        if (bannerAd != null) {
-            bannerAd.resume();
-        }
-        super.onPause();
+       if(mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+
+            //Cierra todos los activitys()
+            finishAffinity();
+       }
+
+       super.onPause();
+
+       Toast.makeText(this, "onPause()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
-
         if (bannerAd != null) {
             bannerAd.destroy();
         }
-
         super.onDestroy();
+
     }
 
     //Metodo para darle funcionamiento al float menu button

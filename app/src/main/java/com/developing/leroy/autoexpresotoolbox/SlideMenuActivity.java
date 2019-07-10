@@ -1,6 +1,12 @@
 package com.developing.leroy.autoexpresotoolbox;
 
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,13 +30,12 @@ public class SlideMenuActivity extends AppCompatActivity {
     private LinearLayout donar;
     private LinearLayout contactProg;
     private LinearLayout bug;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide_menu);
-
-
 
         //Boton trasparente del menu
         btnTrasparente = (Button) findViewById(R.id.botonTrasparente);
@@ -52,6 +57,7 @@ public class SlideMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
+            //this.overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
         });
 
         //Layout onClick info
@@ -122,4 +128,5 @@ public class SlideMenuActivity extends AppCompatActivity {
     private void Slider (){
         slidr = Slidr.attach(this);
     }
+
 }
