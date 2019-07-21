@@ -234,6 +234,31 @@ public class MainActivity extends AppCompatActivity {
                 this.overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             break;
 
+            //Acerca sobre la aplicacion
+            case R.id.aboutTheApp:
+                Toast.makeText(this, "Acerca de la aplicacion", Toast.LENGTH_SHORT).show();
+            break;
+
+            //Acerca del programador
+            case R.id.aboutProgrammer:
+                Toast.makeText(this, "Acerca del programador", Toast.LENGTH_SHORT).show();
+            break;
+
+            //Donar
+            case R.id.donar:
+                Toast.makeText(this, "Donar", Toast.LENGTH_SHORT).show();
+            break;
+
+            //Contactar al programador
+            case R.id.contactar:
+                Toast.makeText(this, "Contactar al programador", Toast.LENGTH_SHORT).show();
+            break;
+
+            //Reportar bugs
+            case R.id.bugs:
+                Toast.makeText(this, "Reportar bugs", Toast.LENGTH_SHORT).show();
+            break;
+
             //Habilita back button para webview
             case android.R.id.home:
                 if (webView.canGoBack()){
