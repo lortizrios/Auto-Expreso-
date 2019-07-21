@@ -108,8 +108,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NoConnectionActivity.class);
             startActivity(intent);
         }else{
-            pullSwipeReload();
-            websiteView();
+            //Corre cuando tiene conexion
+            pullSwipeReload();//Activa la funcion reload
+            websiteView();//Llama funcion websiteView
+
         }
 
         fabActionButtons();
@@ -182,10 +184,11 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("https://www.autoexpreso.com/");
 
-
         //Define color del progressbar
         ((ProgressBar)findViewById(R.id.materialProgressBar_ID)).getIndeterminateDrawable()
         .setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+
     }
 
     //Funcion que valida si el dispositivo tiene internet al iniciar
@@ -266,6 +269,8 @@ public class MainActivity extends AppCompatActivity {
 
                     //Close all Activity
                     finishAffinity();
+                }else{
+                    finishAffinity();
                 }
             }
         });
@@ -329,7 +334,6 @@ public class MainActivity extends AppCompatActivity {
             bannerAd.resume();
 
             super.onResume();
-
         }
 
         Toast.makeText(this, "onResume()", Toast.LENGTH_SHORT).show();
@@ -338,12 +342,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
 
-       if(mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-
-            //Cierra todos los activitys()
-            finishAffinity();
-       }
+//        //arreglar entra al oprimir em menu y share
+//       if(mInterstitialAd.isLoaded()) {
+//            mInterstitialAd.show();
+//       }
 
        super.onPause();
 
@@ -356,7 +358,6 @@ public class MainActivity extends AppCompatActivity {
             bannerAd.destroy();
         }
         super.onDestroy();
-
     }
 
     //Metodo para darle funcionamiento al float menu button
@@ -489,24 +490,39 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    //Enable Material progress bar-------------------------------------------------
+    //Enable Material progress bar and add ad to main page -------------------------------------------------
     public class WebViewClientDemo extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
         }
+
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             progressBar.setVisibility(View.GONE);
             progressBar.setProgress(100);
+
+//            //Ensena anuncio de pantalla completa en activity principal
+//            if(mInterstitialAd.isLoaded()) {
+//                mInterstitialAd.show();
+//            }else {
+//                Log.d("TAG", "The interstitial wasn't loaded yet.");
+//            }
         }
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
             progressBar.setVisibility(View.VISIBLE);
             progressBar.setProgress(0);
+
+            //Ensena anuncio de pantalla completa en activity principal
+            if(mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            }else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.");
+            }
         }
     }
     //------------------------------------------------------------------------
