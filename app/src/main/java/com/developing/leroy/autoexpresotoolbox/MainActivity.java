@@ -312,16 +312,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        //Habilita el uso de back button para web view
-        //y para el Floating button
-        if (webView.canGoBack() || floatingActionsMenu.isExpanded()) {
+        //Habilita el uso de back button para web view y para el Floating button
+        if(webView.canGoBack() || floatingActionsMenu.isExpanded()) {
             floatingActionsMenu.collapse();
             webView.goBack();
-
-
-        }
-
-        else {
+        }else{
             diaLog = exitDialog().show();
         }
 
