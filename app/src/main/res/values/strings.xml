@@ -33,6 +33,10 @@
     <string name="bugs">Bugs</string>
     <string name="reportarbugs">Reportar fallos</string>
     <string name="version"> Versión: </string>
+    <string name="Asunto">asunto</string>
+    <string name="Mensaje">mensaje</string>
+    <string name="Enviar">enviar</string>
+    <string name="Cancelar">cancelar</string>
 
 
 </resources>

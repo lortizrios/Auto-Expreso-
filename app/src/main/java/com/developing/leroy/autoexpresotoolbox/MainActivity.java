@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         //webSettings.setDomStorageEnabled(true);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setUseWideViewPort(true);
-        webSettings.setSaveFormData(true);
+        webSettings.setSaveFormData(false);
         webSettings.setEnableSmoothTransition(true);
         //Enable zoom controls
         //webview.getSettings().setBuiltInZoomControls(true);
@@ -180,9 +180,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Material Progress Bar
         progressBar.setVisibility(View.GONE);
+
         webView.setWebViewClient(new WebViewClientDemo());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("https://www.autoexpreso.com/");
+        webView.loadUrl("https://www.autoexpreso.com//");
 
         //Define color del progressbar
         ((ProgressBar)findViewById(R.id.materialProgressBar_ID)).getIndeterminateDrawable()
@@ -227,16 +227,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(intent, "Compartir"));
             break;
 
-            //Slide menu
-            case R.id.slidemenu:
-                Intent menuIntent = new Intent(MainActivity.this, SlideMenuActivity.class);
-                startActivity(menuIntent);
-                this.overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-            break;
-
             //Acerca sobre la aplicacion
             case R.id.aboutTheApp:
-                Toast.makeText(this, "Acerca de la aplicacion", Toast.LENGTH_SHORT).show();
+                acercaDeLaAplicacion().show();
+                Toast.makeText(this, "Acerca de esta aplicación", Toast.LENGTH_SHORT).show();
             break;
 
             //Acerca del programador
@@ -246,11 +240,15 @@ public class MainActivity extends AppCompatActivity {
 
             //Donar
             case R.id.donar:
-                Toast.makeText(this, "Donar", Toast.LENGTH_SHORT).show();
+                donar().show();
             break;
 
             //Contactar al programador
             case R.id.contactar:
+
+                Intent email = new Intent(MainActivity.this, Email_Activity.class);
+                startActivity(email);
+
                 Toast.makeText(this, "Contactar al programador", Toast.LENGTH_SHORT).show();
             break;
 
@@ -300,6 +298,55 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        return builder;
+    }
+
+    //Acerca de esta aplicacion
+    public AlertDialog.Builder acercaDeLaAplicacion(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        builder.setTitle("Acerca de esta aplicación");
+        builder.setMessage("Esta aplicación ha sido creada para mejorar la interacción entre móvil y" +
+                " pagina web de www.autoexpreso.com. La misma no es dueña de Auto Expreso y " +
+                "tampoco guardamos ninguna información del usuario, transacciones, nombre de" +
+                " usuario, contraseñas, tarjetas de crédito ingresada en esta. Para servicio al" +
+                " cliente de Auto Expreso favor de llamar al 1-888-6888-1010."
+        );
+        builder.setNegativeButton("Entiendo", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+
+            }
+        });
+        return builder;
+    }
+
+    public AlertDialog.Builder donar(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        builder.setTitle("Donar");
+        builder.setMessage("Tu donación ayuda a que esta aplicación mejore. Muchas gracias anticipadas. ");
+        builder.setPositiveButton("donar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                Uri.Builder uriBuilder = new Uri.Builder();
+                uriBuilder.scheme("https").authority("www.paypal.com").path("cgi-bin/webscr");
+                uriBuilder.appendQueryParameter("cmd", "_donations");
+
+                uriBuilder.appendQueryParameter("business", "roby186@gmail.com");
+                uriBuilder.appendQueryParameter("lc", "US");
+                uriBuilder.appendQueryParameter("item_name", "Donation");
+                uriBuilder.appendQueryParameter("no_note", "1");
+                uriBuilder.appendQueryParameter("no_shipping", "1");
+                uriBuilder.appendQueryParameter("currency_code", "USD");
+                Uri payPalUri = uriBuilder.build();
+
+                Intent viewIntent = new Intent(Intent.ACTION_VIEW, payPalUri);
+                startActivity(viewIntent);
+            }
+        });
         return builder;
     }
 
@@ -355,21 +402,17 @@ public class MainActivity extends AppCompatActivity {
 
             super.onResume();
         }
-
-        Toast.makeText(this, "onResume()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPause() {
 
-//        //arreglar entra al oprimir em menu y share
-//       if(mInterstitialAd.isLoaded()) {
-//            mInterstitialAd.show();
-//       }
+        if (bannerAd != null) {
+            bannerAd.resume();
+        }
 
-       super.onPause();
+        super.onPause();
 
-       Toast.makeText(this, "onPause()", Toast.LENGTH_SHORT).show();
     }
 
     @Override

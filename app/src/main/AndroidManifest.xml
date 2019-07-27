@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".Email_Activity"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -30,22 +30,15 @@
         <activity
             android:name=".NoConnectionActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-        />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="[ca-app-pub-3940256099942544~3347511713]"
-        />
+            android:value="[ca-app-pub-3940256099942544~3347511713]" />
 
         <activity
             android:name=".ZoomEnableActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-        />
-
-        <activity android:name=".SlideMenuActivity"
-            android:theme="@style/AppTheme.SliderActivityTheme">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
