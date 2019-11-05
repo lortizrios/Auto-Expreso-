@@ -1,53 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/semiTrasparent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".NoConnectionActivity"
     tools:showIn="@layout/activity_no_connection">
 
     <LinearLayout
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/no_conection"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/standard_20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24000001">
+        app:layout_constraintVertical_bias=".50">
 
-        <ImageButton
-            android:id="@+id/button"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/h1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_signal_wifi_off"
-        />
+            android:layout_gravity="center"
+            android:paddingTop="@dimen/standard_20"
+            android:paddingBottom="@dimen/standard_10"
+            android:text="@string/sin_conexion"
+            android:textSize="@dimen/standard_25"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/noNetwork"
+            android:layout_width="@dimen/standard_55"
+            android:layout_height="@dimen/standard_55"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_signal_wifi_off" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/standard_10"
+            android:text="@string/verifique_su_conexion_y_verifique_de_nuevo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/refrescar" />
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24000001">
 
 
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sin Conexion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

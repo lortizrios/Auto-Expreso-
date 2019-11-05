@@ -11,4 +11,5 @@
     <color name="halfBlack">#80000000</color>
     <color name="softBlack">#1B000000</color>
     <color name="semiTrasparent">#0D000000</color>
+    <color name="gray">#aaa</color>
 </resources>

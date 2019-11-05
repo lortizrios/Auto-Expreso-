@@ -13,14 +13,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,15 +27,10 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.webkit.CookieSyncManager;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.ads.InterstitialAd;
@@ -60,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private com.getbase.floatingactionbutton.FloatingActionButton fABCerrar;
     private com.getbase.floatingactionbutton.FloatingActionButton fABReload;
     private com.getbase.floatingactionbutton.FloatingActionButton fABZoom;
-
     private Vibrator vibraTor;
     private MaterialProgressBar progressBar;
 
@@ -71,30 +63,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Casting MaterialProgressBar
-        progressBar = (MaterialProgressBar) findViewById(R.id.materialProgressBar_ID);
+        progressBar = findViewById(R.id.materialProgressBar_ID);
 
         //Obtiene instancia a SwipeRefreshLayout
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.pullRefresh_ID);
+        swipeRefreshLayout = findViewById(R.id.pullRefresh_ID);
 
         //Obtiene instancia a Vibrator
         vibraTor = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //Obtiene instancia a webview
-        webView = (WebView) findViewById(R.id.webView_ID);
+        webView = findViewById(R.id.webView_ID);
 
         //Firebase Analitics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //Habilita el boton de back en menu superior------------------------------------------------
-        toolBar = (Toolbar) findViewById(R.id.toolbar);
+        toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
 
-        //Habilita el ActionBar en la app
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Habilita el ActionBar(botones de arriba (corazon, share menu)) en la app
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         //Admod banner
-        bannerAd = (AdView) findViewById(R.id.adView_ID);
+        bannerAd = findViewById(R.id.adView_ID);
         AdRequest adRequest = new AdRequest.Builder().build();
         bannerAd.loadAd(adRequest);
 
@@ -104,17 +97,15 @@ public class MainActivity extends AppCompatActivity {
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         //Si no tiene coneccion redirige al SlideMenuActivity
-        if(!haveNetworkConnection()){
+        if(!networkConnection()){
             Intent intent = new Intent(this, NoConnectionActivity.class);
             startActivity(intent);
         }else{
             //Corre cuando tiene conexion
             pullSwipeReload();//Activa la funcion reload
             websiteView();//Llama funcion websiteView
-
+            fabActionButtons();//Llama al boton flotante
         }
-
-        fabActionButtons();
     }
 
     //Habilita el Swipe Reload Web View
@@ -123,25 +114,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
 
-                //Show Reload logo
-                swipeRefreshLayout.setRefreshing(true);
+            //Show Reload logo
+            swipeRefreshLayout.setRefreshing(true);
 
-                //Toast
-                onToast("Recargando Auto Expreso");
+            //Toast
+            onToast("Recargando Auto Expreso");
 
-                //Add a timer
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
+            //Add a timer
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
 
-                        //Web view reloading
-                        webView.reload();
+                    //Web view reloading
+                    webView.reload();
 
-                        // Hide reload logo
-                        swipeRefreshLayout.setRefreshing(false);
+                    // Hide reload logo
+                    swipeRefreshLayout.setRefreshing(false);
 
-                    }//1.5 segundos de espera
-                }, 500);
+                }//1.5 segundos de espera
+            }, 500);
             }
 
         });
@@ -149,9 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Toast method
     public void onToast(String message){
-
         Toast.makeText(this, message , Toast.LENGTH_SHORT).show();
-        
     }
 
     //WebView method
@@ -161,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Verificar si autoexpreso utiliza javascript
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.clearCache(true);
 
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         //webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
@@ -169,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         //webSettings.setDomStorageEnabled(true);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setUseWideViewPort(true);
-        webSettings.setSaveFormData(false);
+        webSettings.setSaveFormData(true);
         webSettings.setEnableSmoothTransition(true);
         //Enable zoom controls
         //webview.getSettings().setBuiltInZoomControls(true);
@@ -187,12 +177,10 @@ public class MainActivity extends AppCompatActivity {
         //Define color del progressbar
         ((ProgressBar)findViewById(R.id.materialProgressBar_ID)).getIndeterminateDrawable()
         .setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-
-
     }
 
     //Funcion que valida si el dispositivo tiene internet al iniciar
-    private boolean haveNetworkConnection(){
+    private boolean networkConnection(){
         ConnectivityManager connectivityManager = (ConnectivityManager)
         this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -230,12 +218,12 @@ public class MainActivity extends AppCompatActivity {
             //Acerca sobre la aplicacion
             case R.id.aboutTheApp:
                 acercaDeLaAplicacion().show();
-                Toast.makeText(this, "Acerca de esta aplicación", Toast.LENGTH_SHORT).show();
             break;
 
             //Acerca del programador
             case R.id.aboutProgrammer:
-                Toast.makeText(this, "Acerca del programador", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(MainActivity.this, AcercaDelDesarrolladorActivity.class);
+                startActivity(intent1);
             break;
 
             //Donar
@@ -254,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
 
             //Reportar bugs
             case R.id.bugs:
+                Intent bug = new Intent(MainActivity.this, ReporteErroresActivity.class);
+                startActivity(bug);
                 Toast.makeText(this, "Reportar bugs", Toast.LENGTH_SHORT).show();
             break;
 
@@ -423,40 +413,41 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    //Metodo para darle funcionamiento al float menu button
+    //Metodo para darle funcionamiento al boton flotante
     private void fabActionButtons() {
         //Float menu
         floatingActionsMenu = findViewById(R.id.fabMenu_ID);
         //Float action buttons
-        fABCerrar = findViewById(R.id.fabCerrarMini_ID);
-        fABReload = findViewById(R.id.fabReloadrMini_ID);
+//        fABCerrar = findViewById(R.id.fabCerrarMini_ID);
+//        fABReload = findViewById(R.id.fabReloadrMini_ID);
         fABZoom = findViewById(R.id.fabEnableZoom_ID);
 
+        //si tiene vibrador hace que vibre cuando se unde el boton flotante
       if(vibraTor.hasVibrator()) {
 
-          //Activa el Float Action Button cuando se clickea
-          fABCerrar.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-
-                  vibraTor.vibrate(20);
-                  timeSecondsCollapse();
-                  exitDialog().show();
-
-              }
-          });
-
-          //Activa el Float Action Button cuando se clickea
-          fABReload.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-
-                  vibraTor.vibrate(20);
-                  Toast.makeText(MainActivity.this, "Reload = False", Toast.LENGTH_SHORT).show();
-                  timeSecondsCollapse();
-
-              }
-          });
+//          //Activa el menu flotante cuando se clickea
+//          fABCerrar.setOnClickListener(new View.OnClickListener() {
+//              @Override
+//              public void onClick(View v) {
+//
+//                  vibraTor.vibrate(20);
+//                  timeSecondsCollapse();
+//                  exitDialog().show();
+//
+//              }
+//          });
+//
+//          //Activa el Float Action Button cuando se clickea
+//          fABReload.setOnClickListener(new View.OnClickListener() {
+//              @Override
+//              public void onClick(View v) {
+//
+//                  vibraTor.vibrate(20);
+//                  Toast.makeText(MainActivity.this, "Reload = False", Toast.LENGTH_SHORT).show();
+//                  timeSecondsCollapse();
+//
+//              }
+//          });
 
           //Habilita el Zoom
           fABZoom.setOnClickListener(new View.OnClickListener() {
@@ -476,33 +467,31 @@ public class MainActivity extends AppCompatActivity {
                   finishAffinity();
               }
           });
-
       }
 
       else{
           Log.v("VIBRATOR", "Este dispositivo NO puede vibrar");
 
-          //Activa el Float Action Button cuando se clickea
-          fABCerrar.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  timeSecondsCollapse();
-                  exitDialog().show();
-
-              }
-          });
-
-          //Activa el Float Action Button cuando se clickea
-          fABReload.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-
-                  Snackbar.make(v, "Reload = False (Cambiar Funcionalidad)", Snackbar.LENGTH_LONG)
-                          .setAction("Action", null).show();
-
-                  timeSecondsCollapse();
-              }
-          });
+//          //Activa el Float Action Button cuando se clickea
+//          fABCerrar.setOnClickListener(new View.OnClickListener() {
+//              @Override
+//              public void onClick(View v) {
+//                  timeSecondsCollapse();
+//                  exitDialog().show();
+//              }
+//          });
+//
+//          //Activa el Float Action Button cuando se clickea
+//          fABReload.setOnClickListener(new View.OnClickListener() {
+//              @Override
+//              public void onClick(View v) {
+//
+//              Snackbar.make(v, "Reload = False (Cambiar Funcionalidad)", Snackbar.LENGTH_LONG)
+//              .setAction("Action", null).show();
+//
+//              timeSecondsCollapse();
+//              }
+//          });
 
           fABZoom.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -519,7 +508,6 @@ public class MainActivity extends AppCompatActivity {
               }
           });
       }
-
 
     }
 
@@ -566,6 +554,12 @@ public class MainActivity extends AppCompatActivity {
             super.onPageFinished(view, url);
             progressBar.setVisibility(View.GONE);
             progressBar.setProgress(100);
+        }
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setProgress(0);
 
 //            //Ensena anuncio de pantalla completa en activity principal
 //            if(mInterstitialAd.isLoaded()) {
@@ -574,21 +568,6 @@ public class MainActivity extends AppCompatActivity {
 //                Log.d("TAG", "The interstitial wasn't loaded yet.");
 //            }
         }
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setProgress(0);
-
-            //Ensena anuncio de pantalla completa en activity principal
-            if(mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-            }else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-            }
-        }
     }
     //------------------------------------------------------------------------
 }
-
-

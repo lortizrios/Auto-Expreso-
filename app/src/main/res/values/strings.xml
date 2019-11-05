@@ -16,7 +16,6 @@
     <string name="valorar_ahora">VALORAR AHORA</string>
     <string name="reload">Reload</string>
     <string name="zoom">Zoom</string>
-    <string name="desarrollador">Sobre desarrollador</string>
     <string name="email">Contactar al desarrollador</string>
     <string name="reports_bugs">Reportar errores</string>
     <string name="prueba">Prueba</string>
@@ -27,16 +26,23 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="slidemenu">Menu</string>
-    <string name="programador">Acerca del programador</string>
+    <string name="desarrollador">Acerca del desarrollador</string>
     <string name="contactProg">Contactar al desarrollador</string>
     <string name="comunicacion">Comunicación</string>
     <string name="bugs">Bugs</string>
     <string name="reportarbugs">Reportar fallos</string>
     <string name="version"> Versión: </string>
-    <string name="Asunto">asunto</string>
-    <string name="Mensaje">mensaje</string>
-    <string name="Enviar">enviar</string>
-    <string name="Cancelar">cancelar</string>
+    <string name="asunto">Asunto</string>
+    <string name="mensaje">Mensaje</string>
+    <string name="enviar">Enviar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="email_leroy">info@leroy-ortiz.com</string>
+    <string name="descripcion_del_error">Indique marca, modelo de celular y una pequeña descripción del error.</string>
+    <string name="cuerpo_del_mensaje"></string>
+    <string name="verifique_su_conexion_y_verifique_de_nuevo">Verifique su conexión e intente de nuevo.</string>
+    <string name="sin_conexion">Sin Conexion</string>
+    <string name="refrescar">Refrescar</string>
+    <string name="para">Para:</string>
 
 
 </resources>

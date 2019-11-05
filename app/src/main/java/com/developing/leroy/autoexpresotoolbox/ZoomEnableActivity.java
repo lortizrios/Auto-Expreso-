@@ -1,14 +1,10 @@
 package com.developing.leroy.autoexpresotoolbox;
 
-import android.app.MediaRouteButton;
 import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
@@ -17,15 +13,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.widget.ContentLoadingProgressBar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -34,18 +29,11 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -78,19 +66,19 @@ public class ZoomEnableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_zoom_enable);
 
         //Casting MaterialProgressBar
-        progressBar = (MaterialProgressBar) findViewById(R.id.materialProgressBar_ID);
+        progressBar = findViewById(R.id.materialProgressBar_ID);
 
         //Obtiene instancia a Vibrator
         vibraTor = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //Obtiene instancia a webview
-        webView = (WebView) findViewById(R.id.webView_ID);
+        webView = findViewById(R.id.webView_ID);
 
         //Firebase Analitics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //Habilita el boton de back en menu superior
-        toolBar = (Toolbar) findViewById(R.id.toolbar);
+        toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
 
         //Habilita el ActionBar en la app
@@ -98,7 +86,7 @@ public class ZoomEnableActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Admod banner
-        bannerAd = (AdView) findViewById(R.id.adView_ID);
+        bannerAd = findViewById(R.id.adView_ID);
         AdRequest adRequest = new AdRequest.Builder().build();
         bannerAd.loadAd(adRequest);
 
@@ -107,29 +95,22 @@ public class ZoomEnableActivity extends AppCompatActivity {
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-
-        if (!haveNetworkConection()) {
-
+        if (!networkConection()) {
             Intent intent = new Intent(this, NoConnectionActivity.class);
             startActivity(intent);
         }
 
         else {
-
             websiteView();
         }
 
         fabActionButtons();
 
-
-
     }
 
     //Toast method
     public void onToast(String message){
-
         Toast.makeText(this, message , Toast.LENGTH_SHORT).show();
-
     }
 
     //WebView method
@@ -164,16 +145,16 @@ public class ZoomEnableActivity extends AppCompatActivity {
         webView.loadUrl("https://www.autoexpreso.com/");
 
         //Define color del progressbar
-        ((ProgressBar)findViewById(R.id.materialProgressBar_ID))
-                .getIndeterminateDrawable()
-                .setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        ((ProgressBar)findViewById(R.id.materialProgressBar_ID)).getIndeterminateDrawable()
+        .setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
     }
 
-    //Funcion que valida si el dispositivo tiene internet al iniciar
-    private boolean haveNetworkConection(){
+    //Funcion que valida si el dispositivo tiene internet
+    private boolean networkConection(){
         ConnectivityManager connectivityManager = (ConnectivityManager)
-                this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         boolean  isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
 
@@ -280,6 +261,32 @@ public class ZoomEnableActivity extends AppCompatActivity {
 
     }
 
+//    public AlertDialog.Builder internetDialog(){
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(ZoomEnableActivity.this);
+//
+//        builder.setTitle("Cerrar");
+//        builder.setMessage("¿Desea cerrar la aplicación?");
+//        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int which) {
+//
+//            }
+//        });
+//        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                if(mInterstitialAd.isLoaded()) {
+//                    mInterstitialAd.show();
+//                    finishAffinity();
+//                }
+//            }
+//        });
+//
+//        return builder;
+//    }
+
     @Override
     public void onBackPressed() {
 
@@ -288,8 +295,6 @@ public class ZoomEnableActivity extends AppCompatActivity {
         if (webView.canGoBack() || floatingActionsMenu.isExpanded()) {
             floatingActionsMenu.collapse();
             webView.goBack();
-
-
         }
 
         else {
@@ -305,7 +310,6 @@ public class ZoomEnableActivity extends AppCompatActivity {
             bannerAd.resume();
 
             super.onResume();
-
         }
     }
 
@@ -332,26 +336,26 @@ public class ZoomEnableActivity extends AppCompatActivity {
     private void fabActionButtons() {
         //Float menu
         floatingActionsMenu = findViewById(R.id.fabMenu_ID);
+
         //Float action buttons
-        fABCerrar = findViewById(R.id.fabCerrarMini_ID);
+//        fABCerrar = findViewById(R.id.fabCerrarMini_ID);
         fABReload = findViewById(R.id.fabReloadrMini_ID);
         fABZoom = findViewById(R.id.fabEnableZoom_ID);
 
         if(vibraTor.hasVibrator()) {
+//            //Cierra la app
+//            fABCerrar.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    vibraTor.vibrate(20);
+//                    timeSecondsCollapse();
+//                    exitDialog().show();
+//
+//                }
+//            });
 
-            //Activa el Float Action Button cuando se clickea
-            fABCerrar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    vibraTor.vibrate(20);
-                    timeSecondsCollapse();
-                    exitDialog().show();
-
-                }
-            });
-
-            //Activa el Float Action Button cuando se clickea
+            //Reload
             fABReload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -366,8 +370,7 @@ public class ZoomEnableActivity extends AppCompatActivity {
 
                 }
             });
-
-            //Habilita el Zoom Out
+            //Redirige a activity main
             fABZoom.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -387,17 +390,17 @@ public class ZoomEnableActivity extends AppCompatActivity {
         else{
             Log.v("VIBRATOR", "Este dispositivo NO puede vibrar");
 
-            //Activa el Float Action Button cuando se clickea
-            fABCerrar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    timeSecondsCollapse();
-                    exitDialog().show();
+            //Cierra la app
+//            fABCerrar.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    timeSecondsCollapse();
+//                    exitDialog().show();
+//
+//                }
+//            });
 
-                }
-            });
-
-            //Activa el Float Action Button cuando se clickea
+            //Reload
             fABReload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -411,17 +414,17 @@ public class ZoomEnableActivity extends AppCompatActivity {
                 }
             });
 
+            //Redirige al main activity
             fABZoom.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                onToast("Zoom Deshabilitado");
+                timeSecondsCollapse();
 
-                    onToast("Zoom Deshabilitado");
-                    timeSecondsCollapse();
-
-                    Intent intent = new Intent(ZoomEnableActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                    finishAffinity();
+                Intent intent = new Intent(ZoomEnableActivity.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                finishAffinity();
                 }
             });
         }
